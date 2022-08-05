@@ -8,8 +8,8 @@ body{
 	width: 100%;
 	position: relative;
 	display: flex;
-	/* justify-content: center;
-	align-items: center; */
+	justify-content: center;
+	align-items: center;
 	background-color: rgba(197, 230, 253, 0.358);
 }
 
@@ -25,6 +25,7 @@ body{
 	position: absolute;
 	top: 200px;
 	left: 200px;
+	/* right: 500px; */
 	background-color: rgb(112, 147, 216);
 }
 
@@ -39,4 +40,17 @@ body{
 .add-right-border{
 	border-right: 10px solid pink;
 	cursor: col-resize;
+}
+
+.add-bottom-border{
+	border-bottom: 10px solid pink;
+	cursor: row-resize;
+}
+
+.add-diagnal-cursor{
+	cursor: nwse-resize;
+}
+
+.add-grab-cursor{
+	cursor: grab;
 }
