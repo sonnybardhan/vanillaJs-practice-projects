@@ -12,51 +12,45 @@ box.setAttribute('draggable', true);
 
 box.addEventListener('dragstart', function (e) {
   dragItem = this;
-  // console.log('drag started at: ', e.clientX, e.clientY);
-
   const { top, left } = e.target.getBoundingClientRect();
-
   boxClick.x = e.clientX - left;
   boxClick.y = e.clientY - top;
-
-  console.log('boxClick: ', boxClick);
 });
 
 box.addEventListener('dragend', function (e) {
-  console.log('x: ', e.clientX, 'y: ', e.clientY);
   let x = e.clientX;
   let y = e.clientY;
 
   const windowX = window.innerWidth;
   const windowY = window.innerHeight;
 
-  console.log('window: ', windowX, windowY);
+  const boxWidth = e.target.offsetWidth;
+  const boxHeight = e.target.offsetHeight;
+  let boxLeft = x - boxClick.x;
+  let boxRight = x + (boxWidth - boxClick.x);
 
-  const boxX = e.target.offsetWidth;
-  const boxY = e.target.offsetHeight;
+  let boxTop = y - boxClick.y;
+  let boxBottom = y + (boxHeight - boxClick.y);
 
-  const totalX = x + boxX;
-  const totalY = y + boxY;
-
-  if (totalX > windowX) {
-    return console.log('X: out of bounds!');
+  if (boxLeft < 0) {
+    boxLeft = 0;
   }
 
-  if (totalX < 0) {
-    return console.log('X: out of bounds!');
+  if (boxRight > windowX) {
+    boxLeft = windowX - boxWidth;
   }
 
-  if (totalY > windowY) {
-    return console.log('Y: out of bounds!');
+  if (boxTop < 0) {
+    boxTop = 0;
   }
 
-  if (totalY < 0) {
-    return console.log('Y: out of bounds!');
+  if (boxBottom > windowY) {
+    boxTop = windowY - boxHeight;
   }
 
   dragItem.style.position = 'absolute';
-  dragItem.style.left = e.clientX + 'px';
-  dragItem.style.top = e.clientY + 'px';
+  dragItem.style.left = boxLeft + 'px';
+  dragItem.style.top = boxTop + 'px';
   dragItem = null;
 });
 
