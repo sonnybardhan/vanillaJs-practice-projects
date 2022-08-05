@@ -38,4 +38,5 @@ body{
 
 .add-right-border{
 	border-right: 10px solid pink;
+	cursor: col-resize;
 }
