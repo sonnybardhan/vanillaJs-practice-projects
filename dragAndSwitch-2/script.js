@@ -3,7 +3,7 @@ const box = document.getElementById('box1');
 const resizers = document.querySelectorAll('.resizer');
 const dragHandle = document.querySelector('.draghandle');
 
-dragHandle.setAttribute('draggable', true);
+// dragHandle.addEventListener('mousedown', onDrag);
 
 body.addEventListener('dragover', (e) => e.preventDefault());
 
@@ -41,6 +41,10 @@ function onMouseDownResizer(e) {
 }
 
 function onMouseUp(e) {
+  removeListeners();
+}
+
+function removeListeners() {
   body.removeEventListener('mousemove', onMouseMove);
   body.removeEventListener('mouseup', onMouseUp);
   axis = '';
@@ -70,6 +74,8 @@ function onMouseMove(e) {
 
 //drag functions
 
+dragHandle.setAttribute('draggable', true);
+
 const initialBoxPosition = {
   x: 0,
   y: 0,
@@ -85,6 +91,7 @@ dragHandle.addEventListener('dragstart', onDragStart);
 dragHandle.addEventListener('dragend', onDragEnd);
 
 function onDragStart(e) {
+  removeListeners();
   const { x, y, top, left } = e.target.offsetParent.getBoundingClientRect();
   initialBoxPosition.x = x;
   initialBoxPosition.y = y;
