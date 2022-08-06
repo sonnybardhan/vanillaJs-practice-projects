@@ -3,7 +3,7 @@ const box = document.getElementById('box1');
 const resizers = document.querySelectorAll('.resizer');
 const dragHandle = document.querySelector('.draghandle');
 
-// dragHandle.addEventListener('mousedown', onDrag);
+dragHandle.addEventListener('mousedown', onDragHandleMouseDown);
 
 body.addEventListener('dragover', (e) => e.preventDefault());
 
@@ -74,66 +74,78 @@ function onMouseMove(e) {
 
 //drag functions
 
-dragHandle.setAttribute('draggable', true);
+function onDragHandleMouseDown() {
+  dragHandle.setAttribute('draggable', true);
 
-const initialBoxPosition = {
-  x: 0,
-  y: 0,
-};
+  const initialBoxPosition = {
+    x: 0,
+    y: 0,
+  };
 
-const boxClick = {
-  x: 0,
-  y: 0,
-};
+  const boxClick = {
+    x: 0,
+    y: 0,
+  };
 
-dragHandle.addEventListener('dragstart', onDragStart);
+  dragHandle.addEventListener('dragstart', onDragStart);
+  dragHandle.addEventListener('dragend', onDragEnd);
+  // console.log('added drag listeners');
 
-dragHandle.addEventListener('dragend', onDragEnd);
+  //drag helper functions
 
-function onDragStart(e) {
-  removeListeners();
-  const { x, y, top, left } = e.target.offsetParent.getBoundingClientRect();
-  initialBoxPosition.x = x;
-  initialBoxPosition.y = y;
+  function onDragStart(e) {
+    removeListeners();
+    const { x, y, top, left } = e.target.offsetParent.getBoundingClientRect();
+    initialBoxPosition.x = x;
+    initialBoxPosition.y = y;
 
-  const mouseX = e.clientX;
-  const mouseY = e.clientY;
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
 
-  boxClick.x = mouseX - left;
-  boxClick.y = mouseY - top;
-}
-
-function onDragEnd(e) {
-  const mouseX = e.clientX;
-  const mouseY = e.clientY;
-
-  const maxX = window.innerWidth;
-  const maxY = window.innerHeight;
-
-  let newX;
-  let newY;
-
-  let boxLeft = mouseX - boxClick.x;
-  let boxRight = mouseX + (box.getBoundingClientRect().width - boxClick.x);
-  let boxTop = mouseY - boxClick.y;
-  let boxBottom = mouseY + (box.getBoundingClientRect().height - boxClick.y);
-
-  if (boxLeft < 0) {
-    newX = 0;
-  } else if (boxRight > maxX) {
-    newX = maxX - box.getBoundingClientRect().width;
-  } else {
-    newX = mouseX - boxClick.x;
+    boxClick.x = mouseX - left;
+    boxClick.y = mouseY - top;
   }
 
-  if (boxTop < 0) {
-    newY = 0;
-  } else if (boxBottom > maxY) {
-    newY = maxY - box.getBoundingClientRect().height;
-  } else {
-    newY = mouseY - boxClick.y;
+  function onDragEnd(e) {
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+
+    const maxX = window.innerWidth;
+    const maxY = window.innerHeight;
+
+    let newX;
+    let newY;
+
+    let boxLeft = mouseX - boxClick.x;
+    let boxRight = mouseX + (box.getBoundingClientRect().width - boxClick.x);
+    let boxTop = mouseY - boxClick.y;
+    let boxBottom = mouseY + (box.getBoundingClientRect().height - boxClick.y);
+
+    if (boxLeft < 0) {
+      newX = 0;
+    } else if (boxRight > maxX) {
+      newX = maxX - box.getBoundingClientRect().width;
+    } else {
+      newX = mouseX - boxClick.x;
+    }
+
+    if (boxTop < 0) {
+      newY = 0;
+    } else if (boxBottom > maxY) {
+      newY = maxY - box.getBoundingClientRect().height;
+    } else {
+      newY = mouseY - boxClick.y;
+    }
+
+    box.style.left = newX + 'px';
+    box.style.top = newY + 'px';
+
+    removeDragListeners();
   }
 
-  box.style.left = newX + 'px';
-  box.style.top = newY + 'px';
+  function removeDragListeners() {
+    dragHandle.removeEventListener('dragstart', onDragStart);
+    dragHandle.removeEventListener('dragend', onDragEnd);
+    // console.log('removed drag listeners');
+  }
 }
