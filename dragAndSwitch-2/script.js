@@ -5,6 +5,30 @@ const dragHandle = document.querySelector('.draghandle');
 
 body.addEventListener('dragover', (e) => e.preventDefault());
 
+let controlPressed = false;
+
+body.addEventListener('keydown', (e) => {
+  controlPressed = e.getModifierState('Control');
+
+  if (controlPressed && e.key.toLowerCase() === 'd') {
+    console.log('clone node');
+    // const boxClone = box.cloneNode(false);
+    // boxClone.id = `boxClone${Math.floor(Math.random() * 999)}`;
+    // boxClone.style.left = '10px';
+    // boxClone.style.top = '10px';
+    // boxClone.style.height = '100px';
+    // boxClone.style.width = '100px';
+    // console.log(boxClone);
+
+    // body.append(boxClone);
+  }
+});
+
+body.addEventListener('keyup', (e) => {
+  controlPressed = false;
+  console.log(controlPressed);
+});
+
 box.addEventListener('click', function (e) {
   if (e.target.className === 'draghandle') {
     this.classList.toggle('selected');
@@ -58,7 +82,6 @@ function onMouseUp(e) {
 function removeBodyListeners() {
   body.removeEventListener('mousemove', onMouseMove);
   body.removeEventListener('mouseup', onMouseUp);
-  // axis = '';
 }
 
 function onMouseMove(e) {
@@ -76,18 +99,10 @@ function onMouseMove(e) {
     newHeight = 100;
   }
 
-  // const newWidthX = adjustSize(newWidth)
-  // const newHeightY = adjustSize(newHeight);
-
   if (axis === 'x') {
     box.style.width = `${adjustSize(newWidth)}px`;
-    // box.style.width = `${newWidth}px`;
-    // console.log('adjusted: ', adjustSize(newWidth));
   } else {
     box.style.height = `${adjustSize(newHeight)}px`;
-    // box.style.height = `${newHeight}px`;
-    // console.log('actual: ', newHeight);
-    // console.log('adjusted: ', adjustSize(newHeight));
   }
 }
 
