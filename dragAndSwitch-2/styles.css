@@ -9,8 +9,6 @@ body {
 	width: 100%;
 	position: relative;
 	display: flex;
-	/* justify-content: center; */
-	/* align-items: center; */
 	background-color: rgba(213, 227, 237, 0.358);
 }
 
@@ -24,6 +22,16 @@ body {
 	/* position: relative; */
 }
 
+.draghandle{
+	height:calc(100% - 10px);
+	width: calc(100% - 10px);
+	background-color: rgb(107, 179, 213);
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
 .resizer{
 	position: absolute;
 	background-color: rgba(64, 140, 255, 0.488);
@@ -31,11 +39,11 @@ body {
 }
 
 .y{
-	
 	bottom: 0;
 	height: 10px;
 	width: 100%;
 	/* width: calc(100% - 10px); */
+	/* display: inline-block; */
 	cursor: ns-resize;
 }
 
@@ -44,11 +52,12 @@ body {
 	height: 100%;
 	width: 10px;
 	cursor: ew-resize;
+	display: inline-block;
 }
 
 
 .x:hover, .y:hover{
-	opacity: 1;
+	opacity: .85;
 }
 
 
