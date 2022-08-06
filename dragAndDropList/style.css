@@ -14,27 +14,33 @@ body{
 }
 
 #container{
-	display: flex;
-	flex-direction: column;
-	width: 350px;
-	height: 500px;
-	padding: 1em;
+	display: block;
 	background-color: rgb(167, 192, 247);
+	/* position: relative; */
 }
 
 .item{
-	border: 1px solid #ccc;
+	/* position: absolute; */
 	display: flex;
-	flex: 1;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 5px;
+	/* flex: 1; */
+	height: 100px;
+	width: 300px;
+	/* border: 1px solid #ccc; */
+	margin-bottom: 1rem;
 	background-color: rgb(236, 246, 38);
 	font-family:Verdana, Geneva, Tahoma, sans-serif;
 	font-size: 35px;
 	cursor: grab;
+	user-select: none;
 }
 
-.item:last-child{
-	margin-bottom: 0;
+.placeholder{
+	/* position: absolute; */
+	height: 100px;
+	width: 300px;
+	background-color: antiquewhite;
+	border: 2px dashed #ccc;
+	margin-bottom: 1rem;
 }

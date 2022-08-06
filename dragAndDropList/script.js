@@ -2,26 +2,58 @@ const body = document.querySelector('body');
 const container = document.querySelector('#container');
 const items = document.querySelectorAll('.item');
 
+items.forEach((item) => {
+  item.addEventListener('mousedown', onMouseDown);
+});
+
+let dragItem;
+let moving = false;
+let placeholder;
+
 const initialPosition = {
   x: 0,
   y: 0,
 };
 
-container.addEventListener('dragover', (e) => {
-  e.preventDefault();
-});
+function onMouseDown(e) {
+  dragItem = e.target;
+  const { top, left } = e.target.getBoundingClientRect();
+  initialPosition.x = left;
+  initialPosition.y = top;
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+}
 
-container.addEventListener('mousemove', (e) => {
-  const mouseX = e.clientX;
-  const mouseY = e.clientY;
-});
+function onMouseUp(e) {
+  moving = false;
+  if (placeholder) {
+    placeholder.remove();
+    placeholder = null;
+  }
+  dragItem.style.removeProperty('top');
+  dragItem.style.removeProperty('left');
+  dragItem.style.removeProperty('position');
+  dragItem = null;
+  document.removeEventListener('mousemove', onMouseMove);
+  document.removeEventListener('mouseup', onMouseUp);
+}
 
-items.forEach((item) => {
-  item.setAttribute('draggable', true);
-  item.addEventListener('dragstart', onDragStart);
-  item.addEventListener('dragend', onDragEnd);
-});
+function onMouseMove(e) {
+  dragItem.style.position = 'absolute';
+  dragItem.style.left = e.clientX + 'px';
+  dragItem.style.top = e.clientY + 'px';
 
-function onDragStart(e) {}
+  if (!moving) {
+    moving = true;
+    const nextElement = dragItem.nextElementSibling;
+    const parent = dragItem.parentNode;
+    placeholder = generatePlaceholder();
+    parent.insertBefore(placeholder, nextElement);
+  }
+}
 
-function onDragEnd(e) {}
+function generatePlaceholder() {
+  const div = document.createElement('div');
+  div.classList.add('placeholder');
+  return div;
+}
