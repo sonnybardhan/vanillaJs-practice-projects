@@ -3,9 +3,13 @@ const box = document.getElementById('box1');
 const resizers = document.querySelectorAll('.resizer');
 const dragHandle = document.querySelector('.draghandle');
 
-dragHandle.addEventListener('mousedown', onDragHandleMouseDown);
-
 body.addEventListener('dragover', (e) => e.preventDefault());
+
+box.addEventListener('click', function (e) {
+  if (e.target.className === 'draghandle') {
+    this.classList.toggle('selected');
+  }
+});
 
 resizers.forEach((resizer) => {
   resizer.addEventListener('mousedown', onMouseDownResizer);
@@ -40,14 +44,21 @@ function onMouseDownResizer(e) {
   body.addEventListener('mouseup', onMouseUp);
 }
 
-function onMouseUp(e) {
-  removeListeners();
+function adjustSize(size, gap = 25) {
+  size = Math.floor(size);
+  const remainder = size % gap;
+  size -= remainder;
+  return size;
 }
 
-function removeListeners() {
+function onMouseUp(e) {
+  removeBodyListeners();
+}
+
+function removeBodyListeners() {
   body.removeEventListener('mousemove', onMouseMove);
   body.removeEventListener('mouseup', onMouseUp);
-  axis = '';
+  // axis = '';
 }
 
 function onMouseMove(e) {
@@ -65,14 +76,23 @@ function onMouseMove(e) {
     newHeight = 100;
   }
 
+  // const newWidthX = adjustSize(newWidth)
+  // const newHeightY = adjustSize(newHeight);
+
   if (axis === 'x') {
-    box.style.width = `${newWidth}px`;
+    box.style.width = `${adjustSize(newWidth)}px`;
+    // box.style.width = `${newWidth}px`;
+    // console.log('adjusted: ', adjustSize(newWidth));
   } else {
-    box.style.height = `${newHeight}px`;
+    box.style.height = `${adjustSize(newHeight)}px`;
+    // box.style.height = `${newHeight}px`;
+    // console.log('actual: ', newHeight);
+    // console.log('adjusted: ', adjustSize(newHeight));
   }
 }
 
 //drag functions
+dragHandle.addEventListener('mousedown', onDragHandleMouseDown);
 
 function onDragHandleMouseDown() {
   dragHandle.setAttribute('draggable', true);
@@ -94,7 +114,7 @@ function onDragHandleMouseDown() {
   //drag helper functions
 
   function onDragStart(e) {
-    removeListeners();
+    removeBodyListeners();
     const { x, y, top, left } = e.target.offsetParent.getBoundingClientRect();
     initialBoxPosition.x = x;
     initialBoxPosition.y = y;
@@ -137,8 +157,8 @@ function onDragHandleMouseDown() {
       newY = mouseY - boxClick.y;
     }
 
-    box.style.left = newX + 'px';
-    box.style.top = newY + 'px';
+    box.style.left = adjustSize(newX, 50) + 'px';
+    box.style.top = adjustSize(newY, 50) + 'px';
 
     removeDragListeners();
   }
