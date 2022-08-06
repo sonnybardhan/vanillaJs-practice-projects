@@ -47,13 +47,24 @@ function onMouseUp(e) {
 }
 
 function onMouseMove(e) {
-  const dx = e.clientX - initialPosition.x;
-  const dy = e.clientY - initialPosition.y;
+  let dx = e.clientX - initialPosition.x;
+  let dy = e.clientY - initialPosition.y;
+
+  let newWidth = dimensions.w + dx;
+  let newHeight = dimensions.h + dy;
+
+  if (newWidth < 150) {
+    newWidth = 150;
+  }
+
+  if (newHeight < 100) {
+    newHeight = 100;
+  }
 
   if (axis === 'x') {
-    box.style.width = `${dimensions.w + dx}px`;
+    box.style.width = `${newWidth}px`;
   } else {
-    box.style.height = `${dimensions.h + dy}px`;
+    box.style.height = `${newHeight}px`;
   }
 }
 
@@ -89,6 +100,33 @@ function onDragEnd(e) {
   const mouseX = e.clientX;
   const mouseY = e.clientY;
 
-  box.style.left = mouseX - boxClick.x + 'px';
-  box.style.top = mouseY - boxClick.y + 'px';
+  const maxX = window.innerWidth;
+  const maxY = window.innerHeight;
+
+  let newX;
+  let newY;
+
+  let boxLeft = mouseX - boxClick.x;
+  let boxRight = mouseX + (box.getBoundingClientRect().width - boxClick.x);
+  let boxTop = mouseY - boxClick.y;
+  let boxBottom = mouseY + (box.getBoundingClientRect().height - boxClick.y);
+
+  if (boxLeft < 0) {
+    newX = 0;
+  } else if (boxRight > maxX) {
+    newX = maxX - box.getBoundingClientRect().width;
+  } else {
+    newX = mouseX - boxClick.x;
+  }
+
+  if (boxTop < 0) {
+    newY = 0;
+  } else if (boxBottom > maxY) {
+    newY = maxY - box.getBoundingClientRect().height;
+  } else {
+    newY = mouseY - boxClick.y;
+  }
+
+  box.style.left = newX + 'px';
+  box.style.top = newY + 'px';
 }

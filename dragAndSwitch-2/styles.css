@@ -25,11 +25,12 @@ body {
 .draghandle{
 	height:calc(100% - 10px);
 	width: calc(100% - 10px);
-	background-color: rgb(107, 179, 213);
+	/* background-color: rgb(107, 179, 213); */
 	display: inline-block;
 	position: absolute;
 	top: 0;
 	left: 0;
+	cursor: grab;
 }
 
 .resizer{
