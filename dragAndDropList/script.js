@@ -76,6 +76,7 @@ function onMouseMove(e) {
   const nextElement = placeholder.nextElementSibling;
   const nextElementTop = nextElement?.getBoundingClientRect().top;
 
+  console.log('initialY: ', initialY);
   console.log('previousElement: ', previousElement);
   console.log('nextElement: ', nextElement);
 
@@ -88,6 +89,9 @@ function onMouseMove(e) {
     ) {
       parent.insertBefore(placeholder, placeholder);
       parent.insertBefore(previousElement, nextElement);
+      //update initialPosition.Y
+      // initialPosition.x = left;
+      initialPosition.y = placeholder.getBoundingClientRect().top;
     }
   } else {
     // console.log('going DOWN');
@@ -96,8 +100,10 @@ function onMouseMove(e) {
       bottom >
       nextElementTop + nextElement.getBoundingClientRect().height / 3
     ) {
-      // parent.insertBefore(nextElement, nextElement);
-      // parent.insertBefore(placeholder, nextElement?.nextElementSibling);
+      parent.insertBefore(placeholder, nextElement?.nextElementSibling);
+      parent.insertBefore(nextElement, nextElement);
+      initialPosition.y = placeholder.getBoundingClientRect().top;
+
       // insertAfter(placeholder, placeholder);
     }
   }
