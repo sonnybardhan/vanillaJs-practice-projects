@@ -15,9 +15,18 @@ const initialPosition = {
   y: 0,
 };
 
+const boxClick = {
+  x: 0,
+  y: 0,
+};
+
 function onMouseDown(e) {
   dragItem = e.target;
   const { top, left } = e.target.getBoundingClientRect();
+
+  boxClick.x = e.clientX - left;
+  boxClick.y = e.clientY - top;
+
   initialPosition.x = left;
   initialPosition.y = top;
   document.addEventListener('mousemove', onMouseMove);
@@ -40,8 +49,8 @@ function onMouseUp(e) {
 
 function onMouseMove(e) {
   dragItem.style.position = 'absolute';
-  dragItem.style.left = e.clientX + 'px';
-  dragItem.style.top = e.clientY + 'px';
+  dragItem.style.left = e.clientX - boxClick.x + 'px';
+  dragItem.style.top = e.clientY - boxClick.y + 'px';
 
   if (!moving) {
     moving = true;
@@ -49,6 +58,10 @@ function onMouseMove(e) {
     const parent = dragItem.parentNode;
     placeholder = generatePlaceholder();
     parent.insertBefore(placeholder, nextElement);
+
+    const previousElement = dragItem.previousElementSibling;
+
+    //check if moving up or down
   }
 }
 
