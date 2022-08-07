@@ -7,7 +7,6 @@ items.forEach((item) => {
 });
 
 let dragItem;
-let dragItemMarginBottom;
 let moving = false;
 let placeholder;
 
@@ -49,6 +48,7 @@ function onMouseUp(e) {
   dragItem.style.removeProperty('top');
   dragItem.style.removeProperty('left');
   dragItem.style.removeProperty('position');
+
   dragItem = null;
   document.removeEventListener('mousemove', onMouseMove);
   document.removeEventListener('mouseup', onMouseUp);
@@ -62,56 +62,50 @@ function onMouseMove(e) {
   const initialY = initialPosition.y + boxClick.y;
   const mouseY = e.clientY;
 
+  const nextElement = dragItem.nextElementSibling;
+  const previousElement = placeholder && placeholder.previousElementSibling;
+  const parent = dragItem.parentNode;
+
   if (!moving) {
     moving = true;
-    const nextElement = dragItem.nextElementSibling;
-    const parent = dragItem.parentNode;
     placeholder = generatePlaceholder();
-    parent.insertBefore(placeholder, nextElement);
+    // parent.insertBefore(placeholder, nextElement);
+    insertBefore(parent, placeholder, dragItem);
   }
 
-  const parent = dragItem.parentNode;
-  const previousElement = dragItem.previousElementSibling;
-  const previousElementBottom = previousElement?.getBoundingClientRect().bottom;
-  const nextElement = placeholder.nextElementSibling;
-  const nextElementTop = nextElement?.getBoundingClientRect().top;
+  // console.log('previousElement: ', previousElement);
 
-  console.log('initialY: ', initialY);
-  console.log('previousElement: ', previousElement);
-  console.log('nextElement: ', nextElement);
-
-  if (mouseY < initialY) {
-    // console.log('going UP');
-    const { top } = dragItem.getBoundingClientRect();
-    if (
-      top <
-      previousElementBottom - previousElement.getBoundingClientRect().height / 3
-    ) {
-      parent.insertBefore(placeholder, placeholder);
-      parent.insertBefore(previousElement, nextElement);
-      //update initialPosition.Y
-      // initialPosition.x = left;
-      initialPosition.y = placeholder.getBoundingClientRect().top;
-    }
-  } else {
-    // console.log('going DOWN');
-    const { bottom } = dragItem.getBoundingClientRect();
-    if (
-      bottom >
-      nextElementTop + nextElement.getBoundingClientRect().height / 3
-    ) {
-      parent.insertBefore(placeholder, nextElement?.nextElementSibling);
-      parent.insertBefore(nextElement, nextElement);
-      initialPosition.y = placeholder.getBoundingClientRect().top;
-
-      // insertAfter(placeholder, placeholder);
-    }
+  if (previousElement && isAbove(dragItem, previousElement)) {
+    console.log('swap with: ', previousElement);
+  } else if (nextElement && isAbove(nextElement, dragItem)) {
+    console.log('swap with: ', nextElement);
   }
 }
 
-// function insertAfter(newNode, existingNode) {
-//   existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
-// }
+function isAbove(blockA, blockB) {
+  if (
+    blockA.getBoundingClientRect().top +
+      blockA.getBoundingClientRect().height / 2 <
+    blockB.getBoundingClientRect().top +
+      blockB.getBoundingClientRect().height / 2
+  )
+    return true;
+
+  return false;
+}
+
+//helper functions
+
+function insertBefore(parent, newNode, currentnode) {
+  parent.insertBefore(newNode, currentnode);
+}
+
+function insertAfter(parent, newNode, currentnode) {
+  parent.insertBefore(
+    newNode,
+    currentnode.nextElementSibling?.nextElementSibling
+  );
+}
 
 function generatePlaceholder() {
   const div = document.createElement('div');
