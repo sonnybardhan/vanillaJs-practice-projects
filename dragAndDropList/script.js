@@ -6,7 +6,10 @@ items.forEach((item) => {
   item.addEventListener('mousedown', onMouseDown);
 });
 
+const throttledOnMouseMove = throttle(onMouseMove);
+
 let dragItem;
+let dragItemMarginBottom;
 let moving = false;
 let placeholder;
 
@@ -34,6 +37,7 @@ function onMouseDown(e) {
     .getComputedStyle(dragItem)
     .marginBottom.slice(0, -2);
 
+  // document.addEventListener('mousemove', throttledOnMouseMove);
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 }
@@ -50,11 +54,13 @@ function onMouseUp(e) {
   dragItem.style.removeProperty('position');
 
   dragItem = null;
+  // document.removeEventListener('mousemove', throttledOnMouseMove);
   document.removeEventListener('mousemove', onMouseMove);
   document.removeEventListener('mouseup', onMouseUp);
 }
 
 function onMouseMove(e) {
+  if (!dragItem) return;
   dragItem.style.position = 'absolute';
   dragItem.style.left = e.clientX - boxClick.x + 'px';
   dragItem.style.top = e.clientY - boxClick.y + 'px';
@@ -126,4 +132,20 @@ function generatePlaceholder() {
   div.classList.add('placeholder');
   div.style.marginBottom = dragItemMarginBottom + 'px';
   return div;
+}
+
+function throttle(func, delay = 50) {
+  let lastInvocation = 0;
+
+  if (Date.now() - lastInvocation < delay) {
+    return;
+  }
+  lastInvocation = Date.now();
+
+  return function (...args) {
+    setTimeout(() => {
+      lastInvocation = Date.now();
+      func(...args);
+    }, delay);
+  };
 }
