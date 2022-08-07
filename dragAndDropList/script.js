@@ -59,27 +59,41 @@ function onMouseMove(e) {
   dragItem.style.left = e.clientX - boxClick.x + 'px';
   dragItem.style.top = e.clientY - boxClick.y + 'px';
 
-  const initialY = initialPosition.y + boxClick.y;
-  const mouseY = e.clientY;
+  // const initialY = initialPosition.y + boxClick.y;
+  // const mouseY = e.clientY;
 
+  const parent = dragItem.parentNode;
   const nextElement = dragItem.nextElementSibling;
   const previousElement = placeholder && placeholder.previousElementSibling;
-  const parent = dragItem.parentNode;
 
   if (!moving) {
     moving = true;
     placeholder = generatePlaceholder();
     // parent.insertBefore(placeholder, nextElement);
-    insertBefore(parent, placeholder, dragItem);
+    parent.insertBefore(placeholder, dragItem);
+    // insertBefore(parent, placeholder, dragItem);
   }
-
-  // console.log('previousElement: ', previousElement);
 
   if (previousElement && isAbove(dragItem, previousElement)) {
-    console.log('swap with: ', previousElement);
+    swap(dragItem, previousElement);
+    swap(previousElement, placeholder);
   } else if (nextElement && isAbove(nextElement, dragItem)) {
-    console.log('swap with: ', nextElement);
+    swap(dragItem, nextElement);
+    swap(nextElement, placeholder);
   }
+}
+
+function swap(nodeA, nodeB) {
+  const parent = nodeA.parentNode;
+
+  const nodaANext = nodeA.nextElementSibling;
+  const nodeBNext = nodeB.nextElementSibling;
+
+  //insert B in place of A
+  parent.insertBefore(nodeB, nodaANext);
+
+  //insert A in place of B
+  parent.insertBefore(nodeA, nodeBNext);
 }
 
 function isAbove(blockA, blockB) {
