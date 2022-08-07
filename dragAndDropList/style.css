@@ -16,22 +16,27 @@ body{
 #container{
 	display: block;
 	background-color: rgb(167, 192, 247);
+	width: 500px;
 	/* padding: 1em; */
 	/* position: relative; */
 
 }
 
+
+
 .item{
 	/* position: absolute; */
+	color: #ccc;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	/* flex: 1; */
 	height: 100px;
-	width: 300px;
+	/* width: 300px; */
+	width: 100%;
 	/* border: 1px solid #ccc; */
 	margin-bottom: 1rem;
-	background-color: rgb(236, 246, 38);
+	background-color: rgb(55, 60, 94);
 	font-family:Verdana, Geneva, Tahoma, sans-serif;
 	font-size: 35px;
 	cursor: grab;
@@ -43,10 +48,8 @@ body{
 } */
 
 .placeholder{
-	/* position: absolute; */
 	height: 100px;
-	width: 300px;
-	background-color: antiquewhite;
-	border: 2px dashed #ccc;
-	/* margin-bottom: 1rem; */
+	width: 100%;
+	background-color: rgb(220, 215, 250);
+	border: 5px dashed #ccc;
 }

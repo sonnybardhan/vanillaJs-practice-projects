@@ -52,6 +52,7 @@ function onMouseUp(e) {
   dragItem.style.removeProperty('top');
   dragItem.style.removeProperty('left');
   dragItem.style.removeProperty('position');
+  dragItem.style.width = '100%';
 
   dragItem = null;
   // document.removeEventListener('mousemove', throttledOnMouseMove);
@@ -65,8 +66,8 @@ function onMouseMove(e) {
   dragItem.style.left = e.clientX - boxClick.x + 'px';
   dragItem.style.top = e.clientY - boxClick.y + 'px';
 
-  // const initialY = initialPosition.y + boxClick.y;
-  // const mouseY = e.clientY;
+  dragItem.style.width =
+    window.getComputedStyle(container).width.slice(0, -2) + 'px';
 
   const parent = dragItem.parentNode;
   const nextElement = dragItem.nextElementSibling;
@@ -75,9 +76,7 @@ function onMouseMove(e) {
   if (!moving) {
     moving = true;
     placeholder = generatePlaceholder();
-    // parent.insertBefore(placeholder, nextElement);
     parent.insertBefore(placeholder, dragItem);
-    // insertBefore(parent, placeholder, dragItem);
   }
 
   if (previousElement && isAbove(dragItem, previousElement)) {
