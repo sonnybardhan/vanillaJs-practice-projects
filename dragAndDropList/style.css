@@ -16,7 +16,7 @@ body{
 #container{
 	display: block;
 	background-color: rgb(167, 192, 247);
-	padding: 1em;
+	/* padding: 1em; */
 	/* position: relative; */
 }
 
@@ -37,9 +37,9 @@ body{
 	user-select: none;
 }
 
-.item:last-child{
+/* .item:last-child{
 	margin-bottom: 0;
-}
+} */
 
 .placeholder{
 	/* position: absolute; */
@@ -47,5 +47,5 @@ body{
 	width: 300px;
 	background-color: antiquewhite;
 	border: 2px dashed #ccc;
-	margin-bottom: 1rem;
+	/* margin-bottom: 1rem; */
 }

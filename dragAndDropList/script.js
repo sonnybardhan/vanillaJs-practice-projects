@@ -7,6 +7,7 @@ items.forEach((item) => {
 });
 
 let dragItem;
+let dragItemMarginBottom;
 let moving = false;
 let placeholder;
 
@@ -29,6 +30,11 @@ function onMouseDown(e) {
 
   initialPosition.x = left;
   initialPosition.y = top;
+
+  dragItemMarginBottom = window
+    .getComputedStyle(dragItem)
+    .marginBottom.slice(0, -2);
+
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 }
@@ -39,6 +45,7 @@ function onMouseUp(e) {
     placeholder.remove();
     placeholder = null;
   }
+
   dragItem.style.removeProperty('top');
   dragItem.style.removeProperty('left');
   dragItem.style.removeProperty('position');
@@ -52,21 +59,57 @@ function onMouseMove(e) {
   dragItem.style.left = e.clientX - boxClick.x + 'px';
   dragItem.style.top = e.clientY - boxClick.y + 'px';
 
+  const initialY = initialPosition.y + boxClick.y;
+  const mouseY = e.clientY;
+
   if (!moving) {
     moving = true;
     const nextElement = dragItem.nextElementSibling;
     const parent = dragItem.parentNode;
     placeholder = generatePlaceholder();
     parent.insertBefore(placeholder, nextElement);
+  }
 
-    const previousElement = dragItem.previousElementSibling;
+  const parent = dragItem.parentNode;
+  const previousElement = dragItem.previousElementSibling;
+  const previousElementBottom = previousElement?.getBoundingClientRect().bottom;
+  const nextElement = placeholder.nextElementSibling;
+  const nextElementTop = nextElement?.getBoundingClientRect().top;
 
-    //check if moving up or down
+  console.log('previousElement: ', previousElement);
+  console.log('nextElement: ', nextElement);
+
+  if (mouseY < initialY) {
+    // console.log('going UP');
+    const { top } = dragItem.getBoundingClientRect();
+    if (
+      top <
+      previousElementBottom - previousElement.getBoundingClientRect().height / 3
+    ) {
+      parent.insertBefore(placeholder, placeholder);
+      parent.insertBefore(previousElement, nextElement);
+    }
+  } else {
+    // console.log('going DOWN');
+    const { bottom } = dragItem.getBoundingClientRect();
+    if (
+      bottom >
+      nextElementTop + nextElement.getBoundingClientRect().height / 3
+    ) {
+      // parent.insertBefore(nextElement, nextElement);
+      // parent.insertBefore(placeholder, nextElement?.nextElementSibling);
+      // insertAfter(placeholder, placeholder);
+    }
   }
 }
+
+// function insertAfter(newNode, existingNode) {
+//   existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+// }
 
 function generatePlaceholder() {
   const div = document.createElement('div');
   div.classList.add('placeholder');
+  div.style.marginBottom = dragItemMarginBottom + 'px';
   return div;
 }
