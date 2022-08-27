@@ -5,6 +5,10 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 const BLUE = '#0095dd';
+let score = 0;
+
+const BRICK_COLUMNS = 9;
+const BRICK_ROWS = 5;
 
 rulesBtn.addEventListener('click', () => {
   rules.classList.add('rules-show');
@@ -13,6 +17,41 @@ rulesBtn.addEventListener('click', () => {
 closeBtn.addEventListener('click', () => {
   rules.classList.remove('rules-show');
 });
+
+const brickData = {
+  w: 70,
+  h: 20,
+  padding: 10,
+  offsetX: 45,
+  offsetY: 45,
+  visible: true,
+};
+
+const bricks = [];
+
+for (let i = 0; i < BRICK_COLUMNS; i++) {
+  bricks[i] = [];
+  for (let j = 0; j < BRICK_ROWS; j++) {
+    const x = i * (brickData.w + brickData.padding) + brickData.offsetX;
+    const y = j * (brickData.h + brickData.padding) + brickData.offsetY;
+    bricks[i][j] = { x, y, ...brickData };
+  }
+}
+
+console.log(bricks);
+
+//draw bricks
+function drawBricks() {
+  bricks.forEach((col) => {
+    col.forEach((brick) => {
+      ctx.beginPath();
+      ctx.rect(brick.x, brick.y, brick.w, brick.h);
+      ctx.fillStyle = brick.visible ? BLUE : 'transparent';
+      ctx.fill();
+      ctx.closePath();
+    });
+  });
+}
 
 //create ball
 const ball = {
@@ -34,6 +73,12 @@ const paddle = {
   dx: 0,
 };
 
+// draw score
+function drawScore() {
+  ctx.font = '20px Arial';
+  ctx.fillText(`Score: ${score}`, canvas.width - 100, 30);
+}
+
 function drawBall() {
   ctx.beginPath();
   ctx.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
@@ -47,5 +92,11 @@ function drawPaddle() {
   (ctx.fillStyle = BLUE), ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
 }
 
-drawBall();
-drawPaddle();
+function draw() {
+  drawBall();
+  drawPaddle();
+  drawScore();
+  drawBricks();
+}
+
+draw();
