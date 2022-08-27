@@ -38,8 +38,6 @@ for (let i = 0; i < BRICK_COLUMNS; i++) {
   }
 }
 
-console.log(bricks);
-
 //draw bricks
 function drawBricks() {
   bricks.forEach((col) => {
@@ -93,10 +91,58 @@ function drawPaddle() {
 }
 
 function draw() {
+  //clear the canvas at the start of every rendering
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBall();
   drawPaddle();
   drawScore();
   drawBricks();
+  movePaddle();
 }
 
-draw();
+// draw();
+function update() {
+  draw();
+  requestAnimationFrame(update);
+}
+
+update();
+
+function movePaddle() {
+  paddle.x += paddle.dx;
+
+  //wall detection
+  if (paddle.x + paddle.w > canvas.width) {
+    paddle.x = canvas.width - paddle.w;
+  }
+
+  if (paddle.x < 0) {
+    paddle.x = 0;
+  }
+}
+
+function keyUp(e) {
+  const { key } = e;
+  if (
+    key === 'Right' ||
+    key === 'ArrowRight' ||
+    key === 'Left' ||
+    key === 'ArrowLeft'
+  ) {
+    paddle.dx = 0;
+  }
+}
+
+function keyDown(e) {
+  const { key } = e;
+
+  if (key === 'Right' || key === 'ArrowRight') {
+    paddle.dx = paddle.speed;
+  }
+  if (key === 'Left' || key === 'ArrowLeft') {
+    paddle.dx = -paddle.speed;
+  }
+}
+
+document.addEventListener('keydown', keyDown);
+document.addEventListener('keyup', keyUp);
