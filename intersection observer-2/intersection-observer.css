@@ -1,0 +1,43 @@
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: rgb(216, 182, 255);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	height: calc(100vh);
+	width: 80%;
+	background-color: lightseagreen;
+	/* padding: 1em; */
+	font-family: 'Courier New', Courier, monospace;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 40px;
+	border-radius: 1em;
+	border: 10px dashed black;
+	/* padding: 5em; */
+	margin: 3em;
+	margin-bottom: 1em;
+} 
+
+.c2 {
+	background-color: lightgreen;
+}
+
+.c3 {
+	background-color: paleturquoise;
+}
+
+.in-frame{
+	color: hotpink;
+}
