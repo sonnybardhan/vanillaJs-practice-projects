@@ -97,12 +97,15 @@ function updateTime(currentTime, duration) {
 
 function updateProgressBar(e) {
   const { currentTime, duration } = e.srcElement;
-
   updateTime(currentTime, duration);
 
   if (currentTime && duration) {
     const percent = (currentTime / duration) * 100;
     progress.style.width = `${percent}%`;
+  }
+
+  if (currentTime >= duration) {
+    nextSong();
   }
 }
 
@@ -113,6 +116,22 @@ function addPrefix(num) {
   return num;
 }
 
+function scrub(e) {
+  const { x, y } = e;
+  const { width, left } = progress.parentElement.getBoundingClientRect();
+  const pointClicked = x - left;
+
+  let goTo = (pointClicked / width) * 100;
+
+  if (goTo < 0) goTo = 0;
+  else if (goTo > 100) goTo = 100;
+
+  progress.style.width = `${goTo}%`;
+  music.currentTime = music.duration * (goTo / 100);
+}
+playSong();
+// progress.addEventListener('click', (e) => console.log(e));
+progressContainer.addEventListener('click', scrub);
 prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
 music.addEventListener('timeupdate', updateProgressBar);
