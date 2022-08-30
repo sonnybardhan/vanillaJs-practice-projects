@@ -81,11 +81,8 @@ function nextSong() {
   playSong();
 }
 
-function updateProgressBar(e) {
+function updateTime(currentTime, duration) {
   if (isPlaying) {
-    // console.log(e.srcElement.currentTime);
-    // console.log(e.srcElement.duration);
-    const { currentTime, duration } = e.srcElement;
     let currentMins = Math.floor(currentTime % 60);
     let currentSecs = Math.floor(currentTime / 60);
     let totalMins = Math.floor(duration % 60);
@@ -95,6 +92,17 @@ function updateProgressBar(e) {
     durationDisplay.textContent = `${totalSecs ? totalSecs : 0}:${
       totalMins ? addPrefix(totalMins) : '00'
     }`;
+  }
+}
+
+function updateProgressBar(e) {
+  const { currentTime, duration } = e.srcElement;
+
+  updateTime(currentTime, duration);
+
+  if (currentTime && duration) {
+    const percent = (currentTime / duration) * 100;
+    progress.style.width = `${percent}%`;
   }
 }
 
