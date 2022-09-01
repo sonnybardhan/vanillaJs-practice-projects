@@ -1,6 +1,13 @@
-function calculateTime(changeMins, time = Date.now()) {
-  let currentHours = new Date().getHours();
-  let currentMins = new Date().getMinutes();
+function calculateTime(changeMins, time = '') {
+  if (time) {
+    if (!time.includes(':')) return console.error('Invalid format');
+    time = new Date(...Array(3).fill(null), ...time.split(':'));
+  } else {
+    time = new Date();
+  }
+
+  let currentHours = time.getHours();
+  let currentMins = time.getMinutes();
 
   let deltaDays = 0;
   let deltaHours = Math.round(changeMins / 60);
@@ -31,4 +38,4 @@ function calculateTime(changeMins, time = Date.now()) {
 const addPrefix = (num) => (num < 10 ? `0${num}` : num);
 // function addPrefix(num) num < 10 ? `0${num}` : num;
 
-calculateTime(-25);
+calculateTime(120, '20:10');
