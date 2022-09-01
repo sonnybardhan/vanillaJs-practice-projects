@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./timeCalc.css">
+	<script src="./timeCalc-v2.js" defer></script>
+	<script src="./script.js"  defer></script>
+	<title>Time Calculator</title>
+</head>
+<body>
+	<div class="container">
+		<h1>Time Calculator</h1>
+		<div class="time-container">
+			<div class="inputs">
+				<div class="form-element">
+					<label for="start-time-input">Start at</label>
+					<input type="text" id="start-time-input" placeholder="eg. 9:15">
+				</div>
+				<div class="form-element">
+					<label for="times-input">Times</label>
+					<!-- <input type="text" id="times-input" placeholder="eg. 60, 10, 60, 15"> -->
+					<textarea id="times-input" cols="30" rows="5" placeholder="eg. 60, 10, 60, 15"></textarea>
+				</div>
+				
+				<div class="form-element radio-btn-container">
+					<span>[,]</span>
+					<input type="radio" name="input-type" id="comma" value="comma" checked>
+					<span>[space]</span>
+					<input type="radio" name="input-type" id="space" value="space">
+				</div>
+				<div class="form-element btn-container">
+					<button id="clear-btn">Clear</button>
+					<button id="calculate-btn">Calculate</button>
+				</div>
+			</div>
+			<div class="output">
+				[output ... ]
+			</div>
+		</div>
+	</div>
+</body>
+</html>
