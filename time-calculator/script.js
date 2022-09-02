@@ -4,8 +4,6 @@ const timesInput = document.querySelector('#times-input');
 const calculateBtn = document.querySelector('#calculate-btn');
 const clearBtn = document.querySelector('#clear-btn');
 const outputDiv = document.querySelector('.output');
-// const commaRadio = document.querySelector('#comma');
-// const spaceRadio = document.querySelector('#space');
 const currentTimeDisplay = document.querySelector('#current-time-display');
 
 function getTimeString(displaySecs = false) {
@@ -43,7 +41,9 @@ function updateScreenTime() {
 }
 
 // let type = 'comma';
+
 updateScreenTime();
+startTimePadding.value = 5;
 startTimeInput.value = getPaddedStartTime();
 
 // commaRadio.addEventListener('input', () => {
@@ -64,16 +64,6 @@ calculateBtn.addEventListener('click', () => {
   const startStr = getPaddedStartTime();
   const timesStr = timesInput.value;
   let timesArr = cleanupInput(timesStr);
-  // if (type === 'space') {
-  //   timesArr = [...timesStr.split('\n')]
-  //     .filter(Boolean)
-  //     .map((num) => num.trim());
-  // } else {
-  //   timesArr = [...timesStr.split(',')]
-  //     .filter(Boolean)
-  //     .map((num) => num.trim());
-  // }
-
   const result = calculateTimes(timesArr, startStr);
   printOutput(result, timesArr);
 });
@@ -84,6 +74,8 @@ function cleanupInput(input) {
     .map((group) => group.split(' '))
     .flat()
     .map((group) => group.split('\n'))
+    .flat()
+    .map((group) => group.split('\t'))
     .flat()
     .filter(Boolean);
 }
