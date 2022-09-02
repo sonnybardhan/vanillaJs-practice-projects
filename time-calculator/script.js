@@ -1,22 +1,56 @@
-// calculateTimes(
-//   180, 30, 90, 60, 30, 60, 10, 60, 10, 30, 10, 60, 10, 60, 60, 15, 30, 10, 30
-//   9:15
-// );
 const startTimeInput = document.querySelector('#start-time-input');
+const startTimePadding = document.querySelector('#start-time-padding');
 const timesInput = document.querySelector('#times-input');
 const calculateBtn = document.querySelector('#calculate-btn');
 const clearBtn = document.querySelector('#clear-btn');
 const outputDiv = document.querySelector('.output');
 const commaRadio = document.querySelector('#comma');
 const spaceRadio = document.querySelector('#space');
+const currentTimeDisplay = document.querySelector('#current-time-display');
+
+function getTimeString(displaySecs = false) {
+  const hours = addPrefix(new Date().getHours());
+  const mins = addPrefix(new Date().getMinutes());
+  const secs = addPrefix(new Date().getSeconds());
+
+  return displaySecs ? `${hours}:${mins}:${secs}` : `${hours}:${mins}`;
+}
+
+startTimePadding.addEventListener('blur', () => {
+  const input = Number(startTimePadding.value);
+  console.log('input: ', input);
+  if (!isNaN(input) && input > 0) {
+    startTimeInput.value = getPaddedStartTime();
+  }
+});
+
+function getPaddedStartTime() {
+  if (!startTimePadding.value) return getTimeString();
+
+  const padValue = Number(startTimePadding.value) || 10;
+  const delta =
+    padValue - Math.floor(new Date().getMinutes() % padValue) + padValue;
+  let str = calculateTimes(delta);
+  console.log('timeToDisplay: ', str);
+  return str;
+}
+
+function updateScreenTime() {
+  currentTimeDisplay.innerText = getTimeString();
+  setInterval(() => {
+    currentTimeDisplay.innerText = getTimeString();
+  }, 1000);
+}
 
 let type = 'comma';
+updateScreenTime();
+startTimeInput.value = getPaddedStartTime();
 
-commaRadio.addEventListener('input', (e) => {
+commaRadio.addEventListener('input', () => {
   type = 'comma';
 });
 
-spaceRadio.addEventListener('input', (e) => {
+spaceRadio.addEventListener('input', () => {
   type = 'space';
 });
 
@@ -27,36 +61,34 @@ clearBtn.addEventListener('click', () => {
 });
 
 calculateBtn.addEventListener('click', () => {
-  const startStr = startTimeInput.value;
+  const startStr = getPaddedStartTime();
   const timesStr = timesInput.value;
   let timesArr;
 
-  // timesArr = [...timesStr.split(',')].filter(Boolean).map((num) => num.trim());
-
   if (type === 'space') {
-    console.log('using spaces');
     timesArr = [...timesStr.split('\n')]
       .filter(Boolean)
       .map((num) => num.trim());
-    console.log('\n found', timesArr);
   } else {
     console.log('using commas');
     timesArr = [...timesStr.split(',')]
       .filter(Boolean)
       .map((num) => num.trim());
-    console.log(', found', timesArr);
   }
+
   const result = calculateTimes(timesArr, startStr);
-  printOutput(result);
+  printOutput(result, timesArr);
 });
 
-function printOutput(elements) {
-  // DocumentFragment
+function printOutput(elements, timesArr) {
   const outputArray = [];
 
-  elements.forEach((element) => {
+  elements.forEach((element, idx) => {
     const div = document.createElement('div');
-    div.innerText = element;
+    if (timesArr[idx] > 20) {
+      div.style.backgroundColor = 'pink';
+    }
+    div.innerText = `${element} [${timesArr[idx] ? timesArr[idx] : '-'}]`;
     outputArray.push(div);
   });
   outputDiv.innerText = '';

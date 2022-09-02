@@ -32,6 +32,7 @@ body * {
 	justify-content: center;
 	align-items: center;	
 	padding: 1em;
+	position: relative;
 }
 
 .inputs {
@@ -133,7 +134,16 @@ button:active{
 	width: 3em;
 }
 
-
+#current-time-display{
+	/* background-color: blue; */
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	width: 100%;
+	text-align: right;
+	font-size: large;
+	font-weight: bold;
+}
 
 #clear-btn{
 	background-color: rgba(242, 193, 237, 0.533);

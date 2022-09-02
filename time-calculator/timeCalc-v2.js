@@ -41,7 +41,8 @@ function calculateTime(changeMins, time = '') {
 
 function calculateTimes(times, start = '') {
   if (!Array.isArray(times)) {
-    return console.log(calculateTime(times, start));
+    // return console.log(calculateTime(times, start));
+    return calculateTime(times, start);
   }
 
   const timeList = [];
