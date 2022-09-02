@@ -4,8 +4,8 @@ const timesInput = document.querySelector('#times-input');
 const calculateBtn = document.querySelector('#calculate-btn');
 const clearBtn = document.querySelector('#clear-btn');
 const outputDiv = document.querySelector('.output');
-const commaRadio = document.querySelector('#comma');
-const spaceRadio = document.querySelector('#space');
+// const commaRadio = document.querySelector('#comma');
+// const spaceRadio = document.querySelector('#space');
 const currentTimeDisplay = document.querySelector('#current-time-display');
 
 function getTimeString(displaySecs = false) {
@@ -42,17 +42,17 @@ function updateScreenTime() {
   }, 1000);
 }
 
-let type = 'comma';
+// let type = 'comma';
 updateScreenTime();
 startTimeInput.value = getPaddedStartTime();
 
-commaRadio.addEventListener('input', () => {
-  type = 'comma';
-});
+// commaRadio.addEventListener('input', () => {
+//   type = 'comma';
+// });
 
-spaceRadio.addEventListener('input', () => {
-  type = 'space';
-});
+// spaceRadio.addEventListener('input', () => {
+//   type = 'space';
+// });
 
 clearBtn.addEventListener('click', () => {
   startTimeInput.value = '';
@@ -63,22 +63,30 @@ clearBtn.addEventListener('click', () => {
 calculateBtn.addEventListener('click', () => {
   const startStr = getPaddedStartTime();
   const timesStr = timesInput.value;
-  let timesArr;
-
-  if (type === 'space') {
-    timesArr = [...timesStr.split('\n')]
-      .filter(Boolean)
-      .map((num) => num.trim());
-  } else {
-    console.log('using commas');
-    timesArr = [...timesStr.split(',')]
-      .filter(Boolean)
-      .map((num) => num.trim());
-  }
+  let timesArr = cleanupInput(timesStr);
+  // if (type === 'space') {
+  //   timesArr = [...timesStr.split('\n')]
+  //     .filter(Boolean)
+  //     .map((num) => num.trim());
+  // } else {
+  //   timesArr = [...timesStr.split(',')]
+  //     .filter(Boolean)
+  //     .map((num) => num.trim());
+  // }
 
   const result = calculateTimes(timesArr, startStr);
   printOutput(result, timesArr);
 });
+
+function cleanupInput(input) {
+  return input
+    .split(',')
+    .map((group) => group.split(' '))
+    .flat()
+    .map((group) => group.split('\n'))
+    .flat()
+    .filter(Boolean);
+}
 
 function printOutput(elements, timesArr) {
   const outputArray = [];

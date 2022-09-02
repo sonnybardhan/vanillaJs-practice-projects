@@ -33,6 +33,7 @@ body * {
 	align-items: center;	
 	padding: 1em;
 	position: relative;
+	box-shadow: 0 0 45px 5px rgba(0, 0, 0, 0.056);
 }
 
 .inputs {
@@ -46,6 +47,7 @@ body * {
 	display: flex;
 	/* width: 100%; */
 	justify-content: space-between;
+	/* justify-content: end; */
 	/* background-color: aqua; */
 }
 
@@ -61,8 +63,16 @@ textarea{
 }
 
 input, textarea {
-	width: 200px;
 	padding: .5em;
+}
+textarea {
+	min-width: 200px;
+}
+
+#start-time-padding, #start-time-input{
+	width: 100px;
+	/* display: flex; */
+	/* align-items: center; */
 }
 
 label{
@@ -88,9 +98,8 @@ input, button, textarea {
 .output {
 	min-height: 300px;
 	width: 300px;
-	/* background-color: rgb(251, 251, 251); */
-	background-color: rgb(206, 241, 255);
-	/* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+	background-color: rgb(221, 245, 254);
+	/* box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2); */
 	border-radius: .5em;
 	padding: 1em;
 }
@@ -132,6 +141,18 @@ button:active{
 
 .radio-btn-container input{
 	width: 3em;
+}
+
+.start-time-form-element, .start-time-padding-form-element{
+	display: flex;
+	align-items: center;
+	padding: .25em;
+	border-radius: .25em;
+}
+.start-time-form-element{
+
+	background-color: rgb(206, 241, 255);
+
 }
 
 #current-time-display{
