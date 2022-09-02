@@ -11,24 +11,23 @@ body * {
 .container{
 	min-height: 100vh;
 	width: 100vw;
-	/* background-color: lightcyan; */
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	/* justify-content: center; */
 	align-items: center;
 	gap: 20px;
 	padding: 1em;
+	/* background-color: rgb(248, 248, 248); */
+	background-color: rgb(251, 247, 255);
 }
 
 .time-container{
 	gap: 10px;
-	width: 700px;
+	min-width: 400px;
 	min-height: 500px;
-	background-color: rgba(228, 247, 255, 0.719);
+	background-color: rgb(255, 255, 255);
 	border-radius: .5em;
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	align-items: center;	
 	padding: 1em;
@@ -36,43 +35,44 @@ body * {
 	box-shadow: 0 0 45px 5px rgba(0, 0, 0, 0.056);
 }
 
+.inputs{
+	display: flex;
+	flex-direction: column;
+	align-self: flex-start;
+}
+
 .inputs {
 	display: flex;
 	flex-direction: column;
-	/* width: 350px; */
 	gap: 10px;
 }
 
 .form-element {
 	display: flex;
-	/* width: 100%; */
 	justify-content: space-between;
-	/* justify-content: end; */
-	/* background-color: aqua; */
 }
 
 .inputs input textarea{
 	padding: .25em;
 	border-radius: .1em;
-	/* width: 50%; */
-}
-textarea{
-	padding: .25em;
-	resize: none;
-	width: 70%;
 }
 
 input, textarea {
 	padding: .5em;
 }
+
+textarea {
+	resize: none;
+	width: 70%;
+}
+
 textarea {
 	min-width: 200px;
 }
 
 #start-time-padding, #start-time-input{
-	width: 100px;
-	/* display: flex; */
-	/* align-items: center; */
+	width: 60px;
+	text-align: end;
 }
 
 label{
@@ -90,18 +90,16 @@ input, button, textarea {
 }
 
 .inputs input, button {
-	/* height: 100%; */
 	height: 2em;
-
 }
 
 .output {
-	min-height: 300px;
+	min-height: 500px;
 	width: 300px;
 	background-color: rgb(221, 245, 254);
-	/* box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2); */
 	border-radius: .5em;
 	padding: 1em;
+	align-self: flex-start;
 }
 
 button{
@@ -114,27 +112,20 @@ button{
 }
 
 button:hover{
-	/* filter: 50%; */
-	/* opacity: .9; */
 	transform: scale(1.1);
 }
 button:active{
-	/* filter: 50%; */
 	opacity: .7;
 	transform: scale(1.08);
 }
 
 .btn-container{
-	/* width: 50%; */
 	gap: 1em;
 	align-self: flex-end;
 }
 
 .radio-btn-container{
-	/* width: 50%; */
-	/* gap: 1em; */
 	display: flex;
-	/* align-self: flex-end; */
 	justify-content: flex-end;
 	align-items: center;
 }
@@ -150,20 +141,21 @@ button:active{
 	border-radius: .25em;
 }
 .start-time-form-element{
-
-	background-color: rgb(206, 241, 255);
-
+	/* background-color: rgb(226, 231, 126); */
+	background-color: rgb(255, 208, 106);
 }
 
 #current-time-display{
-	/* background-color: blue; */
 	position: absolute;
-	top: 1em;
-	right: 1em;
-	width: 100%;
-	text-align: right;
+	left: -4em;
 	font-size: large;
 	font-weight: bold;
+}
+
+input, textarea {
+	/* background-color: rgb(248, 248, 248); */
+	background-color: rgb(251, 247, 255);
+	border: 2px solid rgba(255, 174, 0, 0.499);
 }
 
 #clear-btn{

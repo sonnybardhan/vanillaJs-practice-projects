@@ -16,7 +16,6 @@ function getTimeString(displaySecs = false) {
 
 startTimePadding.addEventListener('blur', () => {
   const input = Number(startTimePadding.value);
-  console.log('input: ', input);
   if (!isNaN(input) && input > 0) {
     startTimeInput.value = getPaddedStartTime();
   }
@@ -29,7 +28,6 @@ function getPaddedStartTime() {
   const delta =
     padValue - Math.floor(new Date().getMinutes() % padValue) + padValue;
   let str = calculateTimes(delta);
-  console.log('timeToDisplay: ', str);
   return str;
 }
 
@@ -40,22 +38,13 @@ function updateScreenTime() {
   }, 1000);
 }
 
-// let type = 'comma';
-
 updateScreenTime();
 startTimePadding.value = 5;
 startTimeInput.value = getPaddedStartTime();
 
-// commaRadio.addEventListener('input', () => {
-//   type = 'comma';
-// });
-
-// spaceRadio.addEventListener('input', () => {
-//   type = 'space';
-// });
-
 clearBtn.addEventListener('click', () => {
-  startTimeInput.value = '';
+  // startTimeInput.value = '';
+  startTimeInput.value = getPaddedStartTime();
   timesInput.value = '';
   outputDiv.textContent = '';
 });
@@ -87,8 +76,11 @@ function printOutput(elements, timesArr) {
     const div = document.createElement('div');
     if (timesArr[idx] > 20) {
       div.style.backgroundColor = 'pink';
+      div.style.borderRadius = '.25em';
     }
     div.innerText = `${element} [${timesArr[idx] ? timesArr[idx] : '-'}]`;
+    div.style.padding = '.10em .25em';
+    div.style.margin = '.10em 0';
     outputArray.push(div);
   });
   outputDiv.innerText = '';
