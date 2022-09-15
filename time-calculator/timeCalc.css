@@ -17,7 +17,6 @@ body * {
 	align-items: center;
 	gap: 20px;
 	padding: 1em;
-	/* background-color: rgb(248, 248, 248); */
 	background-color: rgb(251, 247, 255);
 }
 
@@ -141,7 +140,6 @@ button:active{
 	border-radius: .25em;
 }
 .start-time-form-element{
-	/* background-color: rgb(226, 231, 126); */
 	background-color: rgb(255, 208, 106);
 }
 
@@ -153,9 +151,8 @@ button:active{
 }
 
 input, textarea {
-	/* background-color: rgb(248, 248, 248); */
 	background-color: rgb(251, 247, 255);
-	border: 2px solid rgba(255, 174, 0, 0.499);
+	border: .25px solid rgba(255, 174, 0, 0.499);
 }
 
 #clear-btn{
@@ -163,4 +160,12 @@ input, textarea {
 }
 #calculate-btn{
 	background-color: rgba(118, 239, 140, 0.599);
+}
+
+#fixed-times-input{
+	width: 70%;
+}
+
+#fixed-times-input, #start-time-input, #start-time-padding{
+	height: 2.5em;
 }

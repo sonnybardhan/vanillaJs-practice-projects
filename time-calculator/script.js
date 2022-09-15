@@ -22,11 +22,24 @@ startTimePadding.addEventListener('blur', () => {
 });
 
 function getPaddedStartTime() {
-  if (!startTimePadding.value) return getTimeString();
+  if (!startTimePadding.value && startTimeInput.value) {
+    return startTimeInput.value;
+  }
 
+  if (!startTimePadding.value && !startTimeInput.value) {
+    console.log('no start or padding padded time');
+    return getTimeString();
+  } else if (!startTimePadding) {
+    console.log('start time');
+    return startTimeInput.value;
+  }
+
+  console.log('start time', startTimeInput.value);
+  console.log('padded time');
   const padValue = Number(startTimePadding.value) || 10;
+  const minValue = 15;
   const delta =
-    padValue - Math.floor(new Date().getMinutes() % padValue) + padValue;
+    padValue - Math.floor(new Date().getMinutes() % minValue) + padValue;
   let str = calculateTimes(delta);
   return str;
 }
@@ -51,8 +64,10 @@ clearBtn.addEventListener('click', () => {
 
 calculateBtn.addEventListener('click', () => {
   const startStr = getPaddedStartTime();
+  console.log('startStr:', startStr);
   const timesStr = timesInput.value;
   let timesArr = cleanupInput(timesStr);
+  console.log(timesArr);
   const result = calculateTimes(timesArr, startStr);
   printOutput(result, timesArr);
 });

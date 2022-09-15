@@ -1,0 +1,8 @@
+for fixed times 
+	put in order
+	put in order and time
+
+
+eg: 
+	nap-12:30-90, 
+	lunch-15:00-30, 

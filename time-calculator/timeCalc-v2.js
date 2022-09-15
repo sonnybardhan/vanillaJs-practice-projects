@@ -1,5 +1,3 @@
-// arr = [...newNums.split(',')].filter(Boolean).map(num => num.trim())
-
 function calculateTime(changeMins, time = '') {
   if (time) {
     if (!time.includes(':')) return console.error('Invalid format');
@@ -41,7 +39,6 @@ function calculateTime(changeMins, time = '') {
 
 function calculateTimes(times, start = '') {
   if (!Array.isArray(times)) {
-    // return console.log(calculateTime(times, start));
     return calculateTime(times, start);
   }
 
@@ -60,20 +57,7 @@ function calculateTimes(times, start = '') {
     const previousTime = timeList[idx];
     timeList.push(calculateTime(mins, previousTime));
   });
-
-  // console.log('timeList: ', timeList);
-  // console.log('timeList: ', timeList);
   return timeList;
 }
 
 const addPrefix = (num) => (num < 10 ? `0${num}` : num);
-
-// calculateTimes([180], '9:15');
-// calculateTimes(
-//   [180, 30, 90, 60, 30, 60, 10, 60, 10, 30, 10, 60, 10, 60, 60, 15, 30, 10, 30],
-//   '9:15'
-// );
-
-// module.exports = {
-//   calculateTimes,
-// };
