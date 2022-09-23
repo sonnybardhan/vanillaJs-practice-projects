@@ -1,4 +1,5 @@
-const MyPromise = require('./promise.js');
+// const MyPromise = require('./promise.js');
+const MyPromise = require('./promise-2.js');
 // const MyPromise = Promise;
 
 const DEFAULT_VALUE = 'default';

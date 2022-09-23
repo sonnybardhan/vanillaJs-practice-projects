@@ -1,0 +1,20 @@
+a promise takes in 2 arguments
+	a resolve method
+	a reject method
+
+
+the resolve method takes in a value on success
+the resolve method takes in a value on an error
+
+the resolve method passes the value as the 1st argument in a 'then' method
+the reject method passes the value as the 2nd argument in a 'then method or the first (only) argument in a catch method
+
+then methods can be chained after a promise
+they return promises and can be chained one after another
+
+'then' methods take in 2 callbacks
+	the 1st callback is passed in a value from the previous promise post completion
+	the 2nd callback is passed in an error value/message from the previous(or any promise above it) in the chain
+
+	
+ 
