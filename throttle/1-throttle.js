@@ -5,9 +5,9 @@ function throttle(callback, delay) {
   const throttledFunction = function (...args) {
     let now = Date.now();
     let timeElapsed = now - lastCall;
-    let timeRemaininig = delay - timeElapsed;
+    let timeRemaining = delay - timeElapsed;
 
-    if (timeRemaininig <= 0) {
+    if (timeRemaining <= 0) {
       lastCall = now;
       callback.call(this, ...args);
     }
