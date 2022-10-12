@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+}
+
+.box {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background-color: #ccc;
+}
+
+.box:hover {
+  cursor: grab;
+}
